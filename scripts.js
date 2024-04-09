@@ -27,13 +27,41 @@
 const FRESH_PRINCE_URL = "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
 const CURB_POSTER_URL = "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
 const EAST_LOS_HIGH_POSTER_URL = "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
+const GUNDAM_URL = "https://m.media-amazon.com/images/M/MV5BZjI2N2EyNzktZWVjMi00YTFkLTk4MjMtNzJlMTE1MjMzZGNkXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_FMjpg_UX1000_.jpg"
+const ZETA_GUNDAM_URL = "https://image.tmdb.org/t/p/original/pmErEd15QbO05OJ3awhr7jvs8LQ.jpg"
+const ZZ_GUNDAM_URL = "https://image.tmdb.org/t/p/original/8zChoG9PiXcScH8K7s05IBVi7eF.jpg"
+const Eighth_MS_TEAM_URL = "https://image.tmdb.org/t/p/original/zdORwSELKK30P8hWSP2YJgfdcV.jpg"
+const GUNDAM_SEED_URL = "https://m.media-amazon.com/images/M/MV5BMmU5OTNmYmQtMTJhZS00MjIxLWJjZTAtMmQzMWMzMjY4NjllXkEyXkFqcGdeQXVyMjc2Nzg5OTQ@._V1_.jpg"
+const GUNDAM_WING_URL = "https://m.media-amazon.com/images/I/51MaZNz8qSL._AC_UF894,1000_QL80_.jpg"
+const GUNDAM_SEED_DESTINY_URL = "https://m.media-amazon.com/images/M/MV5BZTVjODAzOWItOThhZS00M2FkLWFiOTQtYTIzMzQ2MjJiZWEyXkEyXkFqcGdeQXVyMjc2Nzg5OTQ@._V1_FMjpg_UX1000_.jpg"
+const GUNDAM_00_URL = "https://m.media-amazon.com/images/M/MV5BNzQ0MDU0MWYtMGMxYy00YjJkLTllNmQtNTkyZDRhYjkzZTExXkEyXkFqcGdeQXVyMTA3OTEyODI1._V1_FMjpg_UX1000_.jpg"
 
 // This is an array of strings (TV show titles)
-let titles = [
-    "Fresh Prince of Bel Air",
-    "Curb Your Enthusiasm",
-    "East Los High"
-];
+let titles = {
+    //"Fresh Prince of Bel Air" :FRESH_PRINCE_URL,
+    //"Curb Your Enthusiasm" : CURB_POSTER_URL,
+    //"East Los High": EAST_LOS_HIGH_POSTER_URL,
+    "Gundam" : GUNDAM_URL,
+    "Zeta Gundam": ZETA_GUNDAM_URL,
+    "ZZ Gundam" : ZZ_GUNDAM_URL,
+    "Eighth MS" : Eighth_MS_TEAM_URL,
+    "Gundam Seed" : GUNDAM_SEED_URL,
+    "Gundam Wing" : GUNDAM_WING_URL,
+    "Gundam Seed Destiny" : GUNDAM_SEED_DESTINY_URL,
+    "Gundam 00" : GUNDAM_00_URL,
+
+
+};
+function popLast(map) {
+    const keys = Object.keys(map);
+    if (keys.length === 0) {
+        return null; // Return null if the object is empty
+    }
+    const lastKey = keys[keys.length - 1]; // Get the last key
+    const value = map[lastKey];
+    delete map[lastKey]; // Delete the last key-value pair
+    return [lastKey, value];
+}
 // Your final submission should have much more data than this, and 
 // you should use more than just an array of strings to store it all.
 
@@ -44,19 +72,20 @@ function showCards() {
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
     
-    for (let i = 0; i < titles.length; i++) {
-        let title = titles[i];
+    
+    for (let title in titles) {
+        //let title = titles[i].string;
 
         // This part of the code doesn't scale very well! After you add your
         // own data, you'll need to do something totally different here.
-        let imageURL = "";
-        if (i == 0) {
+        let imageURL = titles[title];
+        /*if (i == 0) {
             imageURL = FRESH_PRINCE_URL;
         } else if (i == 1) {
             imageURL = CURB_POSTER_URL;
         } else if (i == 2) {
             imageURL = EAST_LOS_HIGH_POSTER_URL;
-        }
+        }*/
 
         const nextCard = templateCard.cloneNode(true); // Copy the template card
         editCardContent(nextCard, title, imageURL); // Edit title and image
@@ -89,6 +118,6 @@ function quoteAlert() {
 }
 
 function removeLastCard() {
-    titles.pop(); // Remove last item in titles array
+    popLast(titles); // Remove last item in titles array
     showCards(); // Call showCards again to refresh
 }
