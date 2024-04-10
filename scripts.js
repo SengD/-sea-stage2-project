@@ -52,6 +52,14 @@ let titles = [
 
 
 ];
+
+let quotes = [
+    "I came here to laugh at you.",
+    "Humanity alone possesses a God. The power to transcend the now… the inner God called 'Possibility'.",
+    "I am Gundam.",
+    "This hand of mine glows with an awesome POWER!!!\nIts burning grip tells me to defeat you.\nTake this, my love, my hate and All Of My Sorrow\nSHINING FINGER SWORD!!!!!!!!",
+    "Peace cannot be kept by force. It can only be achieved by understanding."
+];
 function popLast(map) {
     const keys = Object.keys(map);
     if (keys.length === 0) {
@@ -123,13 +131,14 @@ function sortItemsByYearDescending() {
     titles.sort((a, b) => b.year - a.year);
 }
 
-
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+function getRandomQuote() {
+    return quotes[Math.floor(Math.random() * quotes.length)];
+}
 
 function quoteAlert() {
-    console.log("Button Clicked!")
-    alert("I guess I can kiss heaven goodbye, because it got to be a sin to look this good!");
+    console.log("Button Clicked!");
+    var randomQuote = getRandomQuote();
+    alert(randomQuote);
 }
 
 function removeLastCard() {
@@ -171,4 +180,8 @@ function closeAddCardModal() {
     const modal = document.getElementById("add-card-modal");
     modal.style.display = "none";
 }
+// This calls the addCards() function when the page is first loaded
+document.addEventListener("DOMContentLoaded", showCards);
+
+
 
