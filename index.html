@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles">
+    <title>Gundam TV Shows | Home</title>
+    <meta name="description" content="A Catalog of Gundam TV Shows">
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
 </head>
 
 <body>
     <header class="main-header">
-        <h1 class="title">LA TV Shows</h1>
+        <h1 class="title">Gundam TV Shows</h1>
     </header>
     <div id="card-container">
         
@@ -33,7 +33,31 @@
         <button onclick="removeLastCard();">
             Remove A Card!
         </button>
+        <button onclick="handleSortAscendingClick();"> 
+            Sort by Ascending Year!
+        </button>
+        <button onclick="handleSortDescendingClick();">
+            Sort by Descending Year!
+        </button>
+        <button onclick="openAddCardModal();">
+            Add your own card!
+        </button>
     </div>
 </body>
+<div id="card-container"></div>
 
+<div id="add-card-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAddCardModal()">&times;</span>
+      <h2>Add Card</h2>
+      <label for="newTitle">Title:</label>
+      <input type="text" id="newTitle" name="newTitle"><br>
+      <label for="newUrl">URL:</label>
+      <input type="text" id="newUrl" name="newUrl"><br>
+      <label for="newYear">Year:</label>
+      <input type="number" id="newYear" name="newYear"><br>
+      <button id="add-card-submit" onclick="addCard()">Add Card</button>
+    </div>
+  </div>
+</div>
 </html>

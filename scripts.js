@@ -37,21 +37,21 @@ const GUNDAM_SEED_DESTINY_URL = "https://m.media-amazon.com/images/M/MV5BZTVjODA
 const GUNDAM_00_URL = "https://m.media-amazon.com/images/M/MV5BNzQ0MDU0MWYtMGMxYy00YjJkLTllNmQtNTkyZDRhYjkzZTExXkEyXkFqcGdeQXVyMTA3OTEyODI1._V1_FMjpg_UX1000_.jpg"
 
 // This is an array of strings (TV show titles)
-let titles = {
+let titles = [
     //"Fresh Prince of Bel Air" :FRESH_PRINCE_URL,
     //"Curb Your Enthusiasm" : CURB_POSTER_URL,
     //"East Los High": EAST_LOS_HIGH_POSTER_URL,
-    "Gundam" : GUNDAM_URL,
-    "Zeta Gundam": ZETA_GUNDAM_URL,
-    "ZZ Gundam" : ZZ_GUNDAM_URL,
-    "Eighth MS" : Eighth_MS_TEAM_URL,
-    "Gundam Seed" : GUNDAM_SEED_URL,
-    "Gundam Wing" : GUNDAM_WING_URL,
-    "Gundam Seed Destiny" : GUNDAM_SEED_DESTINY_URL,
-    "Gundam 00" : GUNDAM_00_URL,
+    {"title" : "Gundam", "url": GUNDAM_URL, "year" : 1979},
+    {"title":"Zeta Gundam", "url" : ZETA_GUNDAM_URL, "year": 1985},
+    {"title": "ZZ Gundam", "url" : ZZ_GUNDAM_URL, "year": 1986},
+    {"title":"Eighth MS", "url":Eighth_MS_TEAM_URL, "year": 1996},
+    {"title":"Gundam Seed",  "url" : GUNDAM_SEED_URL, "year": 2002},
+    {"title":"Gundam Wing", "url" : GUNDAM_WING_URL, "year" : 1995},
+    {"title": "Gundam Seed Destiny", "url" : GUNDAM_SEED_DESTINY_URL, "year" : 2004},
+    {"title":"Gundam 00", "url" : GUNDAM_00_URL, "year": 2007},
 
 
-};
+];
 function popLast(map) {
     const keys = Object.keys(map);
     if (keys.length === 0) {
@@ -73,12 +73,15 @@ function showCards() {
     const templateCard = document.querySelector(".card");
     
     
-    for (let title in titles) {
+    for (let i = 0; i < titles.length; i++) {
         //let title = titles[i].string;
 
         // This part of the code doesn't scale very well! After you add your
         // own data, you'll need to do something totally different here.
-        let imageURL = titles[title];
+        let item = titles[i];
+        let title = item.title;
+        let imageURL = item.url;
+        let year = item.year;
         /*if (i == 0) {
             imageURL = FRESH_PRINCE_URL;
         } else if (i == 1) {
@@ -88,12 +91,12 @@ function showCards() {
         }*/
 
         const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL); // Edit title and image
+        editCardContent(nextCard, title, imageURL, year); // Edit title and image
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
+function editCardContent(card, newTitle, newImageURL, newYear) {
     card.style.display = "block";
 
     const cardHeader = card.querySelector("h2");
@@ -103,11 +106,23 @@ function editCardContent(card, newTitle, newImageURL) {
     cardImage.src = newImageURL;
     cardImage.alt = newTitle + " Poster";
 
+    const yearAdder = card.querySelector("ul");
+    yearAdder.textContent = "Released in " + newYear;
+
     // You can use console.log to help you debug!
     // View the output by right clicking on your website,
     // select "Inspect", then click on the "Console" tab
     console.log("new card:", newTitle, "- html: ", card);
 }
+
+function sortItemsByYearAscending() {
+    titles.sort((a, b) => a.year - b.year);
+}
+
+function sortItemsByYearDescending() {
+    titles.sort((a, b) => b.year - a.year);
+}
+
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", showCards);
@@ -118,6 +133,42 @@ function quoteAlert() {
 }
 
 function removeLastCard() {
-    popLast(titles); // Remove last item in titles array
-    showCards(); // Call showCards again to refresh
+    popLast(titles); 
+    showCards();
 }
+
+function handleSortAscendingClick() {
+    sortItemsByYearAscending();
+    showCards(); 
+}
+
+function handleSortDescendingClick() {
+    sortItemsByYearDescending();
+    showCards(); 
+}
+function addCard() {
+    const title = document.getElementById("newTitle").value;
+    const url = document.getElementById("newUrl").value;
+    const year = parseInt(document.getElementById("newYear").value);
+
+    if (title && url && year) {
+        // Add the new card to the array
+        titles.push({ title: title, url: url, year: year });
+        sortItemsByYearAscending();
+        showCards();
+        closeAddCardModal();
+    } else {
+        alert("Please fill in all fields.");
+    }
+}
+
+function openAddCardModal() {
+    const modal = document.getElementById("add-card-modal");
+    modal.style.display = "block";
+}
+
+function closeAddCardModal() {
+    const modal = document.getElementById("add-card-modal");
+    modal.style.display = "none";
+}
+
